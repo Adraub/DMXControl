@@ -54,10 +54,9 @@ architecture Behavioral of ClockGenerator is
                 end if;
              else 
                 counter <= 0;
-                CLKOUT<='0';
-             
-                end if;
+                CLKOUT<='0'; 
              end if;
+         end if;
      end process;
 
 

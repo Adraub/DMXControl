@@ -32,58 +32,58 @@ begin
     If Clk'event and Clk='1' then
         CASE state IS
             WHEN Idle =>
-                      if Start = '1' then
-                             state <= Break;
-                             Counter <= 1;
-                      else
-                            state<= Idle;
-                      end if;
+                 if Start = '1' then
+                         state <= Break;
+                         Counter <= 1;
+                 else
+                        state<= Idle;
+                 end if;
             WHEN Break =>
-                          if BdClk = '1' then
-                            if Counter = 22 then
-                                state <= MAB;
-                                Counter <= 1;
-                            else
-                                Counter <= Counter+1;
-                                state<= Break;
-                            end if;
-                          end if;
+                 if BdClk = '1' then
+                     if Counter = 22 then
+                           state <= MAB;
+                           Counter <= 1;
+                     else
+                           Counter <= Counter+1;
+                           state<= Break;
+                     end if;
+                 end if;
             WHEN MAB => 
-             if BdClk = '1' then
-              if Counter = 2 then
-                  state <= Start_Code;
-                  Counter <= 1;
-              else
-                  Counter <= Counter+1;
-                  state<= MAB;
-              end if;
-            end if;
+               if BdClk = '1' then
+                 if Counter = 2 then
+                    state <= Start_Code;
+                    Counter <= 1;
+                 else
+                    Counter <= Counter+1;
+                    state<= MAB;
+                 end if;
+                end if;
             WHEN Start_Code => 
-             if BdClk = '1' then
-              if Counter = 9 then
-                  state <= StopB;
-                  Counter <= 1;
-              else
-                  Counter <= Counter+1;
-                  state<= Start_Code;
-              end if;
+               if BdClk = '1' then
+                  if Counter = 9 then
+                    state <= StopB;
+                    Counter <= 1;
+                  else
+                    Counter <= Counter+1;
+                    state<= Start_Code;
+                end if;
             end if;  
             WHEN StopB => 
-             if BdClk = '1' then
-              if Counter = 2 then
-                  state <= MTBF;
-                  Counter <= 1;
-              else
-                  Counter <= Counter+1;
-                  state<= StopB;
+              if BdClk = '1' then
+                if Counter = 2 then
+                    state <= MTBF;
+                    Counter <= 1;
+                else
+                    Counter <= Counter+1;
+                    state<= StopB;
+                end if;
               end if;
-            end if;
             WHEN MTBF => 
              if BdClk = '1' then
                 state<= Idle;
              else
                   state<= MTBF;
-            end if;                           
+              end if;                           
         END CASE;
      end if;  
 end process; 
@@ -100,17 +100,17 @@ begin
                 Tx <= '0';
                 Done <= '0';
             WHEN MAB =>
-                    Tx <= '1';
-                    Done <= '0';
+                Tx <= '1';
+                Done <= '0';
             WHEN Start_Code =>
-                        Tx <= '0';
-                        Done <= '0';
+                Tx <= '0';
+                Done <= '0';
             WHEN StopB =>
-                        Tx <= '1';
-                        Done <= '0';
+                Tx <= '1';
+                Done <= '0';
             WHEN MTBF =>
-                           Tx <= '1';
-                           Done <= '0';
+                Tx <= '1';
+                Done <= '0';
            END CASE;
     end if;  
 end process; 

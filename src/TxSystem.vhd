@@ -1,35 +1,11 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 19.01.2016 08:15:24
--- Design Name: 
--- Module Name: TxSystem - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+--Main component used for DMX512 transmission of 8 registers
 ----------------------------------------------------------------------------------
 
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity TxSystem is
     Port(Clk: in STD_LOGIC;
@@ -111,35 +87,35 @@ begin
                     If Clk'event and Clk='1' then
                         CASE state IS
                             WHEN Idle =>
-                                      if Send = '1' then
-                                             state <= Init;
-                                             Counter <= 1;
-                                      else
-                                            state<= Idle;
-                                      end if;
+                                 if Send = '1' then
+                                        state <= Init;
+                                        Counter <= 1;
+                                 else
+                                        state<= Idle;
+                                 end if;
                             WHEN Init =>
-                                          if DoneInit = '1' and Counter > 5 then
-                                                state <= Tr0;
-                                                Counter <= 1;
-                                            else
-                                                state<= Init;
-                                                Counter <= Counter+1;
-                                          end if;
+                                 if DoneInit = '1' and Counter > 5 then
+                                        state <= Tr0;
+                                        Counter <= 1;
+                                 else
+                                        state<= Init;
+                                        Counter <= Counter+1;
+                                 end if;
                             WHEN Tr0 => 
-                             if DoneTx = '1' and Counter > 5 then
-                                  state <= Tr1;
-                                  Counter <= 1;
-                              else
-                                  state<= Tr0;
-                                  Counter <= Counter+1;
-                              end if;
+                                 if DoneTx = '1' and Counter > 5 then
+                                       state <= Tr1;
+                                       Counter <= 1;
+                                 else
+                                       state<= Tr0;
+                                       Counter <= Counter+1;
+                                 end if;
                             WHEN Tr1 => 
                                 if DoneTx = '1' and Counter > 5 then
-                                         state <= Tr2;
-                                         Counter <= 1;
+                                       state <= Tr2;
+                                       Counter <= 1;
                                 else
-                                          state<= Tr1;
-                                          Counter <= Counter+1;
+                                       state<= Tr1;
+                                       Counter <= Counter+1;
                                 end if;
                             WHEN Tr2 => 
                                  if DoneTx = '1' and Counter > 5 then
@@ -149,46 +125,46 @@ begin
                                       state<= Tr2;
                                       Counter <= Counter+1;
                                   end if;
-                                WHEN Tr3 => 
-                                    if DoneTx = '1' and Counter > 5 then
-                                             state <= Tr4;
-                                             Counter <= 1;
-                                    else
-                                              state<= Tr3;
-                                              Counter <= Counter+1;
-                                    end if;
+                            WHEN Tr3 => 
+                                 if DoneTx = '1' and Counter > 5 then
+                                      state <= Tr4;
+                                      Counter <= 1;
+                                 else
+                                      state<= Tr3;
+                                      Counter <= Counter+1;
+                                 end if;
                             WHEN Tr4 => 
-                                     if DoneTx = '1' and Counter > 5 then
-                                          state <= Tr5;
-                                          Counter <= 1;
-                                      else
-                                          state<= Tr4;
-                                          Counter <= Counter+1;
-                                      end if;
-                                    WHEN Tr5 => 
-                                        if DoneTx = '1' and Counter > 5 then
-                                                 state <= Tr6;
-                                                 Counter <= 1;
-                                        else
-                                                  state<= Tr5;
-                                                  Counter <= Counter+1;
-                                        end if;
+                                 if DoneTx = '1' and Counter > 5 then
+                                       state <= Tr5;
+                                       Counter <= 1;
+                                 else
+                                       state<= Tr4;
+                                       Counter <= Counter+1;
+                                 end if;
+                            WHEN Tr5 => 
+                                  if DoneTx = '1' and Counter > 5 then
+                                       state <= Tr6;
+                                       Counter <= 1;
+                                  else
+                                       state<= Tr5;
+                                       Counter <= Counter+1;
+                                  end if;
                             WHEN Tr6 => 
-                                         if DoneTx = '1' and Counter > 5 then
-                                              state <= Tr7;
-                                              Counter <= 1;
-                                          else
-                                              state<= Tr6;
-                                              Counter <= Counter+1;
-                                          end if;
-                                        WHEN Tr7 => 
-                                            if DoneTx = '1' and Counter > 5 then
-                                                     state <= Idle;
-                                                     Counter <= 1;
-                                            else
-                                                      state<= Tr7;
-                                                      Counter <= Counter+1;
-                                            end if;
+                                  if DoneTx = '1' and Counter > 5 then
+                                        state <= Tr7;
+                                        Counter <= 1;
+                                  else
+                                        state<= Tr6;
+                                        Counter <= Counter+1;
+                                  end if;
+                            WHEN Tr7 => 
+                                  if DoneTx = '1' and Counter > 5 then
+                                         state <= Idle;
+                                         Counter <= 1;
+                                  else
+                                         state<= Tr7;
+                                         Counter <= Counter+1;
+                                  end if;
                                                     
                         END CASE;
                      end if;  
@@ -211,7 +187,7 @@ begin
                                 Done <= '0';
                                 Carry <= "111";
                                 BdClkEn <= '1';
-                                if DoneInit = '1' then
+                                if DoneInit = '1' and Counter<20 then
                                     SendInit <='1';
                                 else
                                     SendInit <='0';
@@ -227,41 +203,40 @@ begin
                                           SendTx <='0';
                                     end if;
                             WHEN Tr1 =>
-                                        Tx <= TxSe;
-                                       Done <= '0';
-                                        Carry <= "001";
-                                        BdClkEn <= '1';
+                                    Tx <= TxSe;
+                                    Done <= '0';
+                                    Carry <= "001";
+                                    BdClkEn <= '1';
                             WHEN Tr2 =>
-                                         Tx <= TxSe;
-                                          Done <= '0';
-                                          Carry <= "010";
-                                          BdClkEn <= '1';
+                                    Tx <= TxSe;
+                                    Done <= '0';
+                                    Carry <= "010";
+                                    BdClkEn <= '1';
                             WHEN Tr3 =>
-                                          Tx <= TxSe;
-                                           Done <= '0';
-                                           Carry <= "011";
-                                           BdClkEn <= '1';
-                                          WHEN Tr4 =>
-                                                      Tx <= TxSe;
-                                                     Done <= '0';
-                                                      Carry <= "100";
-                                                      BdClkEn <= '1';
-                                          WHEN Tr5 =>
-                                                       Tx <= TxSe;
-                                                        Done <= '0';
-                                                        Carry <= "101";
-                                                        BdClkEn <= '1';
+                                    Tx <= TxSe;
+                                    Done <= '0';
+                                    Carry <= "011";
+                                    BdClkEn <= '1';
+                            WHEN Tr4 =>
+                                    Tx <= TxSe;
+                                    Done <= '0';
+                                    Carry <= "100";
+                                    BdClkEn <= '1';
+                            WHEN Tr5 =>
+                                    Tx <= TxSe;
+                                    Done <= '0';
+                                    Carry <= "101";
+                                    BdClkEn <= '1';
                             WHEN Tr6 =>
-                                                                Tx <= TxSe;
-                                                                Done <= '0';
-                                                                Carry <= "110";
-                                                                BdClkEn <= '1';
-                                                        WHEN Tr7 =>
-                                                                    Tx <= TxSe;
-                                                                   Done <= '0';
-                                                                    Carry <= "111";
-                                                                    BdClkEn <= '1';
-
+                                    Tx <= TxSe;
+                                    Done <= '0';
+                                    Carry <= "110";
+                                    BdClkEn <= '1';
+                            WHEN Tr7 =>
+                                    Tx <= TxSe;
+                                    Done <= '0';
+                                    Carry <= "111";
+                                    BdClkEn <= '1';
                            END CASE;
                     end if;  
                 end process; 
