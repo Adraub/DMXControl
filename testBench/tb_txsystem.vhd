@@ -1,38 +1,14 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 23.01.2016 23:13:31
--- Design Name: 
--- Module Name: tb_txsystem - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+-- This component tests TxSystem behaviour
 ----------------------------------------------------------------------------------
 
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity tb_txsystem is
---  Port ( );
+
 end tb_txsystem;
 
 architecture Behavioral of tb_txsystem is
@@ -74,7 +50,7 @@ Clk <= '1';
 wait for CLK_period / 2;
 end process;
 
--- Stimulus process
+-- Stimulus process: 2 Send impulsions are emitted (Caution: simulation must be done between 0 and 20ms)
 stim_proc : process
 begin
 Send <= '0';
