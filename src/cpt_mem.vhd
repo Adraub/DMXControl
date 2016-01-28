@@ -13,6 +13,7 @@ end cpt_mem;
 architecture Behavioral of cpt_mem is
 signal CPT : STD_LOGIC_VECTOR (2 downto 0);
 
+-—Composant compteur 3 bits
 component CPT_3bits
     Port ( CLK : in STD_LOGIC;
            H : in STD_LOGIC;
@@ -20,6 +21,7 @@ component CPT_3bits
            Q : out STD_LOGIC_VECTOR (2 downto 0));
 end component;
 
+—-Composant de mémoire
 component mem
     Port ( CLK : in STD_LOGIC;
            MODE : in STD_LOGIC_VECTOR (2 downto 0);
