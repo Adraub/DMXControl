@@ -2,7 +2,6 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity tb_CPT3bits is
---  Port ( );
 end tb_CPT3bits;
 
 architecture Behavioral of tb_CPT3bits is
