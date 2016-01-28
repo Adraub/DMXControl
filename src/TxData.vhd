@@ -1,36 +1,16 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 19.01.2016 12:27:40
--- Design Name: 
--- Module Name: TxData - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+-- This component allows to send a byte on the dmx bus
 ----------------------------------------------------------------------------------
 
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
+--StartTx: launch transmission
+--Data: byte to be send
+--Done: '1' if transmission is over
+--Tx2: Connected to dmx bus
 entity TxData is
     Port ( ClkTx : in STD_LOGIC;
            BdClkTx : in STD_LOGIC;
@@ -49,6 +29,7 @@ TYPE STATE_TYPE IS (Idle,StartB,Tr0,Tr1,Tr2
 
 begin
 
+--finit state machine
 FSMtx : process(ClkTx)
 begin
     If ClkTx'event and ClkTx='1' then
@@ -135,7 +116,7 @@ begin
 end process; 
 
 
---Etat des sorties
+--states and its outputs
 FSMvalue : process(ClkTx)
 begin
     If ClkTx'event and ClkTx='1' then

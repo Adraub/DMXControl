@@ -1,27 +1,18 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 26.01.2016 11:33:18
--- Design Name: 
--- Module Name: lyreCom - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+-- Global component that assembles memory and transmission modules-- 
 ----------------------------------------------------------------------------------
-
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
+
+--Mode: select memory writing position
+--DataIn: data to be written on the memory
+--Save: launch saving
+--Led: displays memory writing position
+--Send: send saved values to the DMX bus
+--Done: '1' if sending is over
+--Tx: connected to the DMX transceiver
 entity lyreCom is
     Port ( Clk : in STD_LOGIC;
            Mode : in STD_LOGIC;
@@ -34,10 +25,11 @@ entity lyreCom is
 end lyreCom;
 
 architecture Behavioral of lyreCom is
+--this signals connect reading position order on the memory and its result
 signal Selectionner : STD_LOGIC_VECTOR(2 downto 0);
 signal dataTrans : STD_LOGIC_VECTOR(7 downto 0);
 
-
+--the memory
 component cpt_mem
     Port ( CLK : in STD_LOGIC;
            MODE : in STD_LOGIC;
@@ -48,6 +40,7 @@ component cpt_mem
            LED : out STD_LOGIC_VECTOR (2 downto 0));
 end component;
 
+--the transmission
 component TxSystem
     Port(Clk: in STD_LOGIC;
          Send : in STD_LOGIC;   
@@ -58,6 +51,8 @@ component TxSystem
 end component;
 
 begin
+
+--Connects both components
 
 memory : cpt_mem port map(
           CLK =>Clk,

@@ -1,15 +1,13 @@
+----------------------------------------------------------------------------------
+--This block enable DMX512 communication initialization on the bus (Break, MAB, & Start_Code)
+----------------------------------------------------------------------------------
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
+--Start: launch the init sequence
+--Done: '1' if sequence is over
+--Tx: connected to the DMX transceiver
 
 entity Com_Init is
     Port ( Clk : in STD_LOGIC;
@@ -19,6 +17,7 @@ entity Com_Init is
            Tx : out STD_LOGIC);
 end Com_Init;
 
+--State are linked to the states on the bus (see diagram)
 architecture Behavioral of Com_Init is
     TYPE STATE_TYPE IS (Idle,Break,MAB,Start_Code
     ,StopB,MTBF);
@@ -26,7 +25,7 @@ architecture Behavioral of Com_Init is
     signal Counter : integer;
 begin
 
---Machine état
+--finit state machine and their transition
 FSMinit : process(Clk)
 begin
     If Clk'event and Clk='1' then
@@ -88,7 +87,7 @@ begin
      end if;  
 end process; 
 
---Etat des sorties
+--Values associated to each state
 FSMvalue : process(Clk)
 begin
     If Clk'event and Clk='1' then

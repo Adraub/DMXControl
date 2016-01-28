@@ -6,7 +6,11 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-
+--Send: launch transmission
+--Data: define value to be send on a defined Selection address
+--Selection: memory address to be read by transmissionn
+--Done: '1' if transmission is done
+--Tx: Connected to DMX bus
 entity TxSystem is
     Port(Clk: in STD_LOGIC;
          Send : in STD_LOGIC;   
@@ -15,6 +19,8 @@ entity TxSystem is
          Done: out STD_LOGIC := '1';
          Tx : out STD_LOGIC :='1' );
 end TxSystem;
+
+--Assembles Baud clock generatot, init transmission and byte transmission
 
 architecture Behavioral of TxSystem is
 COMPONENT ClockGenerator
@@ -80,8 +86,9 @@ begin
                 Done => DoneTx,
                 Tx2 => TxSe);
                 
-   Selection <=Carry;             
---Machine état
+   Selection <=Carry;      
+   
+--Finite state machine
        FSMglobal : process(Clk)
                 begin
                     If Clk'event and Clk='1' then
@@ -170,7 +177,7 @@ begin
                      end if;  
                 end process; 
                 
-                --Etat des sorties
+                --values of output for a defined state
                 FSMvalue : process(Clk)
                 begin
                     If Clk'event and Clk='1' then
