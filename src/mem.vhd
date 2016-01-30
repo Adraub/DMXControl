@@ -11,6 +11,7 @@ entity mem is
 end mem;
 
 architecture Behavioral of mem is
+—-Définition de la mémoire 8 octets comme un tableau de 8 vecteurs
 type memArray is array (0 to 7) of STD_LOGIC_VECTOR(7 downto 0);
 signal memSignal : memArray:=("00000000", "00000000", "00000000", "00000000", "00000000", "00000000", "00000000", "00000000");
 signal DOUT : STD_LOGIC_VECTOR (7 downto 0):="00000000";
